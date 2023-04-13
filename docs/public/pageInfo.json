@@ -1,1 +1,18 @@
-{}
+{
+	"/pages/practice": {
+		"text": "代码实践",
+		"link": "/pages/practice/index",
+		"sidebar": false,
+		"aside": false,
+		"layout": "page",
+		"order": 2
+	},
+	"/pages/qa": {
+		"text": "知识点",
+		"link": "/pages/qa/index",
+		"sidebar": false,
+		"aside": false,
+		"layout": "page",
+		"order": 1
+	}
+}

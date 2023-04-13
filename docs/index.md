@@ -1,14 +1,14 @@
 ---
 layout: home
-title: wiki template
-titleTemplate: wiki template
+title: Tk QA
+titleTemplate: Tk QA
 
 hero:
-  name: wiki template
-  tagline: wiki模板
+  name: Tk QA
+  tagline: 问答形式前端知识库
   image:
     src: /banner.svg
-    alt: wiki template
+    alt: Tk QA
   actions:
     - theme: brand
       text: 开始阅读
@@ -18,17 +18,17 @@ hero:
       link: https://github.com/Asplitline
 features:
   - icon:
-      src: /icon/test.svg
+      src: /icon/tech-qa.svg
       class: feature-icon
-    title: Test1
-    details: 测试页面1。
-    link: /pages/a/
+    title: QA - 知识点
+    details: 前端基础知识、计算机网络、开放性问题
+    link: /pages/qa/
     linkText: 前往
   - icon:
       src: /icon/test.svg
       class: feature-icon
-    title: Test2
-    details: 测试页面2。
-    link: /pages/b/
+    title: QA - 代码实践
+    details: 通过代码答疑。
+    link: /pages/practice/
     linkText: 前往
 ---

@@ -1,10 +1,10 @@
 import { pageRoot } from './constants'
 const nav = [
   {
-    text: 'test',
+    text: 'QA',
     items: [
-      { text: 'test1', link: '/a/index', activeMath: '/a/' },
-      { text: 'test2', link: '/b/index', activeMath: '/b/' }
+      { text: '知识点', link: '/qa/index', activeMath: '/qa/' },
+      { text: '代码实践', link: '/practice/index', activeMath: '/practice/' }
     ]
   }
 ]

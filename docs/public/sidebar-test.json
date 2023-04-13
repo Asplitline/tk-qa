@@ -1,38 +1,46 @@
 {
-	"/pages/a": [
+	"/pages/qa": [
 		{
-			"text": "a-test",
+			"text": "技术相关",
 			"collapsible": true,
 			"items": [
 				{
-					"text": "a-test1",
-					"link": "/pages/a/1",
+					"text": "html",
+					"link": "/pages/qa/tech/html",
 					"order": 2
 				},
 				{
-					"text": "a-test2",
-					"link": "/pages/a/2",
+					"text": "css",
+					"link": "/pages/qa/tech/css",
 					"order": 3
-				}
-			]
-		}
-	],
-	"/pages/b": [
-		{
-			"text": "b-test",
-			"collapsible": true,
-			"items": [
-				{
-					"text": "b-test1",
-					"link": "/pages/b/1",
-					"order": 1
 				},
 				{
-					"text": "b-test2",
-					"link": "/pages/b/2",
-					"order": 2
+					"text": "javascript",
+					"link": "/pages/qa/tech/javascript",
+					"order": 4
+				},
+				{
+					"text": "vue",
+					"link": "/pages/qa/tech/vue",
+					"order": 5
+				},
+				{
+					"text": "性能优化",
+					"link": "/pages/qa/tech/perf",
+					"order": 6
+				},
+				{
+					"text": "其他问题",
+					"link": "/pages/qa/tech/iq",
+					"order": 7
+				},
+				{
+					"text": "计算机网络",
+					"link": "/pages/qa/tech/network",
+					"order": 7
 				}
-			]
+			],
+			"order": 1
 		}
 	]
 }
