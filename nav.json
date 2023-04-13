@@ -1,16 +1,16 @@
 [
 	{
-		"text": "test",
+		"text": "QA",
 		"items": [
 			{
-				"text": "test1",
-				"link": "/pages/a/index",
-				"activeMath": "/a/"
+				"text": "知识点",
+				"link": "/pages/qa/index",
+				"activeMath": "/qa/"
 			},
 			{
-				"text": "test2",
-				"link": "/pages/b/index",
-				"activeMath": "/b/"
+				"text": "代码实践",
+				"link": "/pages/practice/index",
+				"activeMath": "/practice/"
 			}
 		]
 	}

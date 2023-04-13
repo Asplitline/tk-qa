@@ -1,38 +1,73 @@
 {
-	"/pages/a": [
+	"/pages/practice": [
 		{
-			"text": "a-test",
+			"text": "代码实践",
 			"collapsible": true,
 			"items": [
 				{
-					"text": "a-test1",
-					"link": "/pages/a/1",
-					"order": 2
-				},
-				{
-					"text": "a-test2",
-					"link": "/pages/a/2",
-					"order": 3
+					"text": "JS手写篇",
+					"link": "/pages/practice/write-js",
+					"order": 1
 				}
 			]
 		}
 	],
-	"/pages/b": [
+	"/pages/qa": [
 		{
-			"text": "b-test",
+			"text": "前端相关",
 			"collapsible": true,
 			"items": [
 				{
-					"text": "b-test1",
-					"link": "/pages/b/1",
-					"order": 1
+					"text": "html",
+					"link": "/pages/qa/fe/html",
+					"order": 2
 				},
 				{
-					"text": "b-test2",
-					"link": "/pages/b/2",
+					"text": "css",
+					"link": "/pages/qa/fe/css",
+					"order": 3
+				},
+				{
+					"text": "javascript",
+					"link": "/pages/qa/fe/javascript",
+					"order": 4
+				},
+				{
+					"text": "vue",
+					"link": "/pages/qa/fe/vue",
+					"order": 5
+				},
+				{
+					"text": "性能优化",
+					"link": "/pages/qa/fe/perf",
+					"order": 6
+				}
+			],
+			"order": 1
+		},
+		{
+			"text": "计算机基础",
+			"collapsible": true,
+			"items": [
+				{
+					"text": "计算机网络",
+					"link": "/pages/qa/base/network",
+					"order": 1
+				}
+			],
+			"order": 2
+		},
+		{
+			"text": "其他问题",
+			"collapsible": true,
+			"items": [
+				{
+					"text": "开放性问题",
+					"link": "/pages/qa/other/open-qa",
 					"order": 2
 				}
-			]
+			],
+			"order": 3
 		}
 	]
 }

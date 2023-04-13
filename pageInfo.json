@@ -1,16 +1,18 @@
 {
-	"/pages/a": {
-		"text": "a-test",
-		"link": "/pages/a/index",
+	"/pages/practice": {
+		"text": "代码实践",
+		"link": "/pages/practice/index",
 		"sidebar": false,
 		"aside": false,
-		"layout": "page"
+		"layout": "page",
+		"order": 2
 	},
-	"/pages/b": {
-		"text": "b-test",
-		"link": "/pages/b/index",
+	"/pages/qa": {
+		"text": "知识点",
+		"link": "/pages/qa/index",
 		"sidebar": false,
 		"aside": false,
-		"layout": "page"
+		"layout": "page",
+		"order": 1
 	}
 }
