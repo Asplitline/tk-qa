@@ -24,8 +24,8 @@
 
 .vp-doc strong {
   color: var(--vp-c-brand-dark);
+  margin: 0 2px;
 }
 :root.dark .vp-doc strong {
   color: var(--vp-c-brand);
-  margin: 0 2px;
 }
