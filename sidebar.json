@@ -53,6 +53,11 @@
 					"text": "计算机网络",
 					"link": "/pages/qa/base/network",
 					"order": 1
+				},
+				{
+					"text": "设计模式",
+					"link": "/pages/qa/base/design",
+					"order": 2
 				}
 			],
 			"order": 2
