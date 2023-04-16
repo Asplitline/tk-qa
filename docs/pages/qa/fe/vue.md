@@ -145,39 +145,190 @@ Vue 数据双向绑定原理是通过 **数据劫持** + **发布订阅模式** 
 
 ### 08-vue 响应式的理解
 
+https://juejin.cn/post/7097067108663558151#heading-37
+
 ### 09-虚拟 DOM 的理解？
+
+https://juejin.cn/post/7097067108663558151#heading-42
 
 ### 10-diff 算法
 
+https://juejin.cn/post/7097067108663558151#heading-47
+
 ### 11-vue3 新特性
 
-### 14-key 作用
+https://juejin.cn/post/7097067108663558151#heading-52
+
+<details class="details-block"><summary>答案</summary>
+
+
+api层面Vue3新特性主要包括：Composition API、SFC Composition API语法糖、Teleport传送门、Fragments 片段、Emits选项、自定义渲染器、SFC CSS变量、Suspense
+
+另外，Vue3.0在框架层面也有很多亮眼的改进：
+
+更快
+
+- 虚拟DOM重写
+- 编译器优化：静态提升、patchFlags、block等
+- 基于Proxy的响应式系统
+
+更小：更好的摇树优化
+
+更容易维护：TypeScript + 模块化
+
+更容易扩展
+
+- 独立的响应化模块
+- 自定义渲染器
+
+### 14-key 作用    
+</details>
+
+
+
+### 
+
+
+
+<details class="details-block"><summary>答案</summary>
+
+key的作用主要是为了更高效的更新虚拟DOM。
+
+vue在patch过程中**判断两个节点是否是相同节点是key是一个必要条件**，渲染一组列表时，key往往是唯一标识，所以如果不定义key的话，vue只能认为比较的两个节点是同一个，哪怕它们实际上不是，这导致了频繁更新元素，使得整个patch过程比较低效，影响性能。
+
+实际使用中在渲染一组列表时key必须设置，而且必须是唯一标识，应该避免使用数组索引作为key，这可能导致一些隐蔽的bug；vue中在使用相同标签元素过渡切换时，也会使用key属性，其目的也是为了让vue可以区分它们，否则vue只会替换其内部属性而不会触发过渡效果。
+
+从源码中可以知道，vue判断两个节点是否相同时主要判断两者的key和元素类型等，因此如果不设置key，它的值就是undefined，则可能永远认为这是两个相同节点，只能去做更新操作，这造成了大量的dom更新操作，明显是不可取的。   
+</details>
+
+
+
+
 
 ### 15-nextTick 使用和原理？
 
 ### 17-Vue 子组件和父组件创建和挂载顺序
 
+
+
+<details class="details-block"><summary>答案</summary>
+
+
+创建过程自上而下，挂载过程自下而上；即：
+
+- parent created
+- child created
+- child mounted
+- parent mounted
+
+之所以会这样是因为Vue创建过程是一个递归过程，先创建父组件，有子组件就会创建子组件，因此创建时先有父组件再有子组件；子组件首次创建时会添加mounted钩子到队列，等到patch结束再执行它们，可见子组件的mounted钩子是先进入到队列中的，因此等到patch结束执行这些钩子时也先执行。
+
+</details>
+
+
+
 ### 18-怎么缓存当前的组件？缓存后怎么更新？
 
 ### 22-从 template 到 render 处理过程
 
+<details class="details-block"><summary>答案</summary>
+Vue中有个独特的编译器模块，称为“compiler”，它的主要作用是将用户编写的template编译为js中可执行的render函数。
+
+之所以需要这个编译过程是为了便于前端程序员能高效的编写视图模板。相比而言，我们还是更愿意用HTML来编写视图，直观且高效。手写render函数不仅效率底下，而且失去了编译期的优化能力。
+
+在Vue中编译器会先对template进行解析，这一步称为parse，结束之后会得到一个JS对象，我们成为抽象语法树AST，然后是对AST进行深加工的转换过程，这一步成为transform，最后将前面得到的AST生成为JS代码，也就是render函数。 
+
+</details>
+
+
+
 ### 23-Vue 实例挂载的过程中发生了什么?
+
+
+
+<details class="details-block"><summary>答案</summary>
+
+挂载过程指的是app.mount()过程，这个过程中整体上做了两件事：**初始化**和**建立更新机制**
+
+初始化会创建组件实例、初始化组件状态，创建各种响应式数据
+
+建立更新机制这一步会立即执行一次组件更新函数，这会首次执行组件渲染函数并执行patch将前面获得vnode转换为dom；同时首次执行渲染函数会创建它内部响应式数据之间和组件更新函数之间的依赖关系，这使得以后数据变化时会执行对应的更新函数。
+
+</details>
+
+
 
 ### 24-Vue 3 的设计目标是什么？做了哪些优化?
 
+<details class="details-block"><summary>答案</summary>
+Vue3的最大设计目标是替代Vue2（皮一下），为了实现这一点，Vue3在以下几个方面做了很大改进，如：易用性、框架性能、扩展性、可维护性、开发体验等
+
+易用性方面主要是API简化，比如`v-model`在Vue3中变成了Vue2中`v-model`和`sync`修饰符的结合体，用户不用区分两者不同，也不用选择困难。类似的简化还有用于渲染函数内部生成VNode的`h(type, props, children)`，其中`props`不用考虑区分属性、特性、事件等，框架替我们判断，易用性大增。
+
+开发体验方面，新组件`Teleport`传送门、`Fragments` 、`Suspense`等都会简化特定场景的代码编写，`SFC Composition API`语法糖更是极大提升我们开发体验。
+
+扩展性方面提升如独立的`reactivity`模块，`custom renderer` API等
+
+可维护性方面主要是`Composition API`，更容易编写高复用性的业务逻辑。还有对TypeScript支持的提升。
+
+性能方面的改进也很显著，例如编译期优化、基于`Proxy`的响应式系统
+
+。。。
+
+
+</details>
+
+
+
 ### 25-你了解哪些 Vue 性能优化方法？
 
+https://juejin.cn/post/7115055320913117220#heading-8
+
 ### 26-Vue 组件为什么只能有一个根元素?
+
+https://juejin.cn/post/7115055320913117220#heading-12
 
 ### 35-什么是递归组件？举个例子说明下？
 
 ### 36-异步组件是什么？使用场景有哪些？
 
+https://juejin.cn/post/7115055320913117220#heading-71
+
 ### 40-使用 vue 渲染大量数据时应该怎么优化？说下你的思路！
 
 ### 44-Vue3.0 性能提升体现在哪些方面？
 
+<details class="details-block"><summary>答案</summary>
+我分别从代码、编译、打包三方面介绍vue3性能方面的提升
+
+代码层面性能优化主要体现在全新响应式API，基于Proxy实现，初始化时间和内存占用均大幅改进；
+
+编译层面做了更多编译优化处理，比如静态提升、动态标记、事件缓存，区块等，可以有效跳过大量diff过程；
+
+打包时更好的支持tree-shaking，因此整体体积更小，加载更快   
+</details>
+
+
+
 ### 45-Vue3.0 里为什么要用 Proxy 替代 defineProperty ？
+
+
+
+<details class="details-block"><summary>答案</summary>
+
+
+JS中做属性拦截常见的方式有三：: [defineProperty](https://link.juejin.cn?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FObject%2FdefineProperty)，[getter](https://link.juejin.cn?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fdocs%2FWeb%2FJavaScript%2FReference%2FFunctions%2Fget)/[setters](https://link.juejin.cn?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fdocs%2FWeb%2FJavaScript%2FReference%2FFunctions%2Fset) 和[Proxies](https://link.juejin.cn?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FProxy).
+
+Vue2中使用`defineProperty`的原因是，2013年时只能用这种方式。由于该API存在一些局限性，比如对于数组的拦截有问题，为此vue需要专门为数组响应式做一套实现。另外不能拦截那些新增、删除属性；最后`defineProperty`方案在初始化时需要深度递归遍历待处理的对象才能对它进行完全拦截，明显增加了初始化的时间。
+
+以上两点在Proxy出现之后迎刃而解，不仅可以对数组实现拦截，还能对Map、Set实现拦截；另外Proxy的拦截也是懒处理行为，如果用户没有访问嵌套对象，那么也不会实施拦截，这就让初始化的速度和内存占用都改善了。
+
+当然Proxy是有兼容性问题的，IE完全不支持，所以如果需要IE兼容就不合适
+
+
+</details>
+
+
 
 ### 49-你觉得 vuex 有什么缺点？
 
@@ -192,7 +343,6 @@ Vue 数据双向绑定原理是通过 **数据劫持** + **发布订阅模式** 
 ### vue2 和 vue3 的区别
 
 <details class="details-block"><summary>答案</summary>
-
 **响应性系统**：Vue 3 引入了 `Proxy` 对象作为响应式系统的基础，相较于 Vue 2 中使用的 `Object.defineProperty` 实现，Proxy 具有更好的性能和更丰富的 API。在 Vue 3 中，数据响应式的实现基于 Proxy 对象，可以监听到对象属性的任何变化，包括新增属性和删除属性，相比于 Vue 2 更加灵活。
 
 **运行时**：Vue 3 的运行时体积缩小了约 40%。在 Vue 3 中，除了一些核心的 runtime-dom 和 runtime-core 之外，其他功能都可以通过使用 Tree-shaking 技术在打包时自动优化掉，避免了无用代码的加载，提高了性能。
@@ -230,9 +380,33 @@ vue2 基于**字符串的模板编译**方式， Vue 3 基于**函数调用的�
 
 ### 16-watch 和 computed 的区别以及选择?
 
+https://juejin.cn/post/7097067108663558151#heading-75
+
 ### 29-ref 和 reactive 异同
 
+https://juejin.cn/post/7115055320913117220#heading-27
+
+<details class="details-block"><summary>答案</summary>
+
+
+`ref`接收内部值（inner value）返回响应式`Ref`对象，`reactive`返回响应式代理对象
+
+从定义上看`ref`通常用于处理单值的响应式，`reactive`用于处理对象类型的数据响应式
+
+两者均是用于构造响应式数据，但是`ref`主要解决原始值的响应式问题
+
+ref返回的响应式数据在JS中使用需要加上`.value`才能访问其值，在视图中使用会自动脱ref，不需要`.value`；ref可以接收对象或数组等非原始值，但内部依然是`reactive`实现响应式；reactive内部如果接收Ref对象会自动脱ref；使用展开运算符(...)展开reactive返回的响应式对象会使其失去响应性，可以结合toRefs()将值转换为Ref对象之后再展开。
+
+reactive内部使用Proxy代理传入对象并拦截该对象各种操作（trap），从而实现响应式。ref内部封装一个RefImpl类，并设置get value/set value，拦截用户对值的访问，从而实现响应式。
+
+
+</details>
+
+
+
 ### 30-watch 和 watchEffect 异同
+
+https://juejin.cn/post/7115055320913117220#heading-32
 
 ### 31-SPA、SSR 的区别是什么
 
@@ -262,15 +436,185 @@ location / {
 
 ### 50-Composition API 与 Options API 有什么不同
 
+<details class="details-block"><summary>答案</summary>
+`Composition API`是一组API，包括：Reactivity API、生命周期钩子、依赖注入，使用户可以通过导入函数方式编写vue组件。而`Options API`则通过声明组件选项的对象形式编写组件。
+
+`Composition API`最主要作用是能够简洁、高效复用逻辑。解决了过去`Options API`中`mixins`的各种缺点；另外`Composition API`具有更加敏捷的代码组织能力，很多用户喜欢`Options API`，认为所有东西都有固定位置的选项放置代码，但是单个组件增长过大之后这反而成为限制，一个逻辑关注点分散在组件各处，形成代码碎片，维护时需要反复横跳，`Composition API`则可以将它们有效组织在一起。最后`Composition API`拥有更好的类型推断，对ts支持更友好，`Options API`在设计之初并未考虑类型推断因素，虽然官方为此做了很多复杂的类型体操，确保用户可以在使用`Options API`时获得类型推断，然而还是没办法用在mixins和provide/inject上。
+
+Vue3首推`Composition API`，但是这会让我们在代码组织上多花点心思，因此在选择上，如果我们项目属于中低复杂度的场景，`Options API`仍是一个好选择。对于那些大型，高扩展，强维护的项目上，`Composition API`会获得更大收益。
+
+</details>
+
 ### .sync 和 v-model 区别
 
 ### Vue 和 React 区别
 
-### composition api 和 option api 区别
+1、响应式原理不同；
+
+2、监听数据变化的实现原理不同；
+
+3、组件写法不同；
+
+4、Diff算法不同；
+
+5、核心思想不同；
+
+6、数据流不同；
+
+7、组合不同功能的方式不同；
+
+8、组件通信方法不同；
+
+9、模板渲染方式不同；
+
+10、渲染过程不同；
+
+11、框架本质不同。
+
+<details class="details-block"><summary>答案</summary>
+
+
+1、响应式原理不同
+
+vue：vue会遍历data数据对象，使用Object.definedProperty()将每个属性都转换为getter和setter，**每个Vue组件实例都有一个对应的watcher实例**，在组件初次渲染的时候会记录组件用到了那些数据，当数据发生改变的时候，会触发setter方法，并通知所有依赖这个数据的watcher实例调用update方法去触发组件的compile渲染方法，进行渲染数据。
+
+react：React主要是通过**setState()方法来更新状态**，**状态更新之后，组件也会重新渲染**。
+
+2、监听数据变化的实现原理不同
+
+vue：Vue**通过 getter/setter以及一些函数的劫持**，能精确知道数据变化。
+
+react：React默认是**通过比较引用的方式（diff）进行的**，如果不优化可能导致大量不必要的VDOM的重新渲染。为什么React不精确监听数据变化呢？这是因为Vue和React设计理念上的区别，Vue使用的是可变数据，而React更强调数据的不可变。
+
+3、组件写法不同
+
+vue：Vue的组件写法是通过**template的单文件**组件格式。
+
+react：React的组件写法是**JSX+inline style**。
+
+4、Diff算法不同
+
+vue和react的diff算法都是进行同层次的比较，主要有以下两点不同：
+
+**vue**对比节点，**如果节点元素类型相同，但是className不同**，认为是不同类型的元素，会进行删除重建，但是**react则会认为是同类型的节点，只会修改节点属性**。
+
+**vue的列表比对采用的是首尾指针法**，而**react采用的是从左到右依次比对的方式**，当一个集合只是把最后一个节点移动到了第一个，react会把前面的节点依次移动，而vue只会把最后一个节点移动到最后一个。
+
+5、核心思想不同
+
+vue：Vue的核心思想是尽可能的降低前端开发的门槛，是一个**灵活易用的渐进式双向绑定的MVVM框架**。
+
+react：React的核心思想是**声明式渲染和组件化、单向数据流**，React既不属于MVC也不属于MVVM架构。
+
+6、数据流不同
+
+vue：Vue1.0中可以实现两种双向绑定：父子组件之间，props可以双向绑定；组件与DOM之间可以通过v-model双向绑定。Vue2.x中去掉了第一种，也就是**父子组件之间不能双向绑定了**（但是提供了一个语法糖自动帮你通过事件的方式修改）。
+
+react：React一直不支持双向绑定，**提倡的是单向数据流**，称之为onChange/setState()模式。不过由于我们一般都会用Vuex以及Redux等单向数据流的状态管理框架。
+
+7、组合不同功能的方式不同
+
+vue：Vue**组合不同功能的方式是通过mixin**，Vue中组件是一个被包装的函数，并不简单的就是我们定义组件的时候传入的对象或者函数。比如我们定义的模板怎么被编译的？比如声明的props怎么接收到的？这些都是vue创建组件实例的时候隐式干的事。
+
+react：React组合不同功能的方式是**通过HOC(高阶组件）**。React最早也是使用mixins的，不过后来他们觉得这种方式对组件侵入太强会导致很多问题，就弃用了mixinx转而使用HoC。高阶组件本质就是高阶函数，React的组件是一个纯粹的函数。
+
+8、组件通信方法不同
+
+vue：Vue中有三种方式可以实现组件通信：
+
+父组件**通过props**向子组件传递数据或者回调，虽然可以传递回调，但是我们一般只传数据；
+
+子组件**通过事件**向父组件发送消息；
+
+通过V2.2.0中**新增的provide/inject**来实现父组件向子组件注入数据，可以跨越多个层级。
+
+react：React中也有对应的三种方式：父组件通过props可以向子组件传递数据或者回调；可以通过 context 进行跨层级的通信，这其实和 provide/inject 起到的作用差不多。
+
+**React 本身并不支持自定义事件**，而Vue中子组件向父组件传递消息有两种方式：事件和回调函数，但Vue更倾向于使用事件。在React中我们都是**使用回调函数**的，这可能是他们二者最大的区别。
+
+9、模板渲染方式不同
+
+vue：Vue是在和组件JS代码分离的单独的模板中，通过指令来实现的，比如条件语句就需要 v-if 来实现对这一点，这样的做法显得有些独特，会把HTML弄得很乱
+
+react：React是在组件JS代码中，通过原生JS实现模板中的常见语法，比如插值，条件，循环等，都是通过JS语法实现的，更加纯粹更加原生
+
+10、渲染过程不同
+
+vue：Vue可以更快地计算出Virtual DOM的差异，这是由于它在渲染过程中，**会跟踪每一个组件的依赖关系，不需要重新渲染整个组件树**。
+
+react：React**在应用的状态被改变时，全部子组件都会重新渲染**。通过shouldComponentUpdate这个生命周期方法可以进行控制，但Vue将此视为默认的优化。
+
+11、框架本质不同
+
+vue：Vue本质是MVVM框架，由MVC发展而来；
+
+react：React是前端组件化框架，由后端组件化发展而来。
+
+</details>
 
 ### vuex 和 pinia 区别
 
 ### react diff 和 vue diff 区别
+
+
+
+### MVC 和 MVVC 区别
+
+MVVC和MVC都是设计模式，用于组织和管理应用程序的代码。它们的主要区别在于它们的结构和组织方式。
+
+
+
+<details class="details-block"><summary>区别</summary>
+
+
+  MVC代表Model-View-Controller（模型-视图-控制器）。在MVC中，应用程序被分成三个部分：
+
+1. 模型(Model)：它表示应用程序中使用的数据和业务逻辑。
+2. 视图(View)：它负责显示数据给用户，通常是通过用户界面实现。
+3. 控制器(Controller)：它接受用户输入并与模型和视图交互，以完成用户请求。
+
+MVVC代表Model-View-ViewModel（模型-视图-视图模型）。在MVVC中，应用程序被分成三个部分：
+
+1. 模型(Model)：与MVC相同，表示应用程序中使用的数据和业务逻辑。
+2. 视图(View)：与MVC相同，负责显示数据给用户。
+3. 视图模型(ViewModel)：它是连接视图和模型的组件，它从模型中获取数据，并将其转换为视图可以使用的格式。它还接受用户输入并将其传递给模型。
+
+因此，MVVC与MVC的不同之处在于，它使用了一个额外的组件——视图模型——来协调视图和模型之间的交互，使得视图和模型之间的解耦更加明显。  
+</details>
+
+
+
+<details class="details-block"><summary>优缺点</summary>
+ 
+
+MVVC的优点包括：
+
+1. 更好的可测试性：由于视图模型中的代码与视图和模型的代码分离，因此更容易对其进行单元测试。
+2. 更好的可维护性：由于视图模型可以充当视图和模型之间的中间人，因此当应用程序需要更改时，它可以更轻松地进行更改而不会影响其他部分。
+3. 更好的可扩展性：由于视图模型可以根据需要添加或删除，因此更容易扩展应用程序。
+
+MVC的优点包括：
+
+1. 更简单的结构：MVC的结构相对简单，因此更容易理解和实现。
+2. 更广泛的支持：MVC是一种常见的设计模式，因此有许多支持MVC的开发工具和框架。
+
+MVVC的缺点包括：
+
+1. 更复杂的结构：由于MVVC引入了一个新的组件——视图模型，因此它的结构比MVC更复杂。
+2. 更高的学习曲线：由于MVVC的结构和组件比MVC更复杂，因此开发人员需要更多的时间和精力来学习和理解MVVC。
+
+MVC的缺点包括：
+
+1. 更难测试：由于视图和控制器之间的紧密耦合，因此更难对其进行单元测试。
+2. 更难维护：当应用程序需要更改时，可能需要更改多个MVC组件，这可能会导致代码变得难以维护。
+3. 更难扩展：由于MVC中的组件相对固定，因此更难扩展应用程序。
+
+   
+</details>
+
+
+
+
 
 ## 低频
 
