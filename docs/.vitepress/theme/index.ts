@@ -12,3 +12,4 @@ export default {
     // console.log(JSON.stringify(siteData.value.themeConfig.sidebar, null, '\t'))
   }
 }
+

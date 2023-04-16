@@ -15,7 +15,7 @@ order: 5
 
 2. 按组件关系阐述使用场景
 
-<details><summary>答案</summary>
+<details class="details-block"><summary>答案</summary>
 组件间通讯分类
 
 - 父子组件
@@ -48,8 +48,7 @@ order: 5
 4. 结合实践
 5. 扩展：vue3 变化
 
-<details><summary>答案</summary>
-
+<details class="details-block"><summary>答案</summary>
 
 1. 每个 Vue 组件实例被创建后都会经过一系列初始化步骤，比如，数据观测，模板编译，挂载实例到 dom 上，以及数据变化时更新 dom。这个过程会运行叫做生命周期钩子的函数，以便开发者在特定的阶段做特定的事情。
 2. 生命周期总共可以分为 8 个阶段：**创建前后, 载入前后, 更新前后, 销毁前后**。
@@ -89,9 +88,7 @@ vue3 差异详解：
 
 ### 能说一说双向绑定使用和原理吗？
 
-<details><summary>答案</summary>
-
-
+<details class="details-block"><summary>答案</summary>
 **双向绑定**（Two-way Binding）是指**数据模型（Model）和视图（View）之间的自动同步机制**，即数据变化视图更新，反之，视图变化数据也更新
 
 Vue 数据双向绑定原理是通过 **数据劫持** + **发布订阅模式** 的方式来实现。发布/订阅模式主要**负责维护订阅者列表和通知订阅者更新**，而数据劫持则主要用于**监听数据变化并触发通知更新**的机制。
@@ -108,8 +105,6 @@ Vue 数据双向绑定原理是通过 **数据劫持** + **发布订阅模式** 
 
 **发布订阅模式**：使用了 `ReactiveEffect` 类来实现响应式数据的管理，支持更加灵活和高效的副作用管理。在 `ReactiveEffect` 中，每个副作用函数都可以通过 `track` 方法来关联一个响应式对象的属性，并将自己添加到该属性的依赖列表中。当**属性发生变化时**，`ReactiveEffect` 对象会**自动触发**所有与该属性关联的副作用函数，并执行它们的操作。
 
-
-
 相关代码：
 
 [Dep 对象](https://github1s.com/vuejs/vue/blob/HEAD/src/core/observer/dep.ts#L31)
@@ -118,12 +113,9 @@ Vue 数据双向绑定原理是通过 **数据劫持** + **发布订阅模式** 
 
 </details>
 
-
-
 ### 常见的双向绑定方法以及优缺点
 
-<details><summary>答案</summary>
-
+<details class="details-block"><summary>答案</summary>
 
 **模板引擎**：使用模板引擎**将数据绑定到视图中，在视图中进行编辑时，再将变化的数据传递回到数据模型中**。常见的模板引擎有 `Mustache、Handlebars、EJS` 等。
 
@@ -150,8 +142,6 @@ Vue 数据双向绑定原理是通过 **数据劫持** + **发布订阅模式** 
 缺点：实现起来较为复杂。
 
 </details>
-
-
 
 ### 08-vue 响应式的理解
 
@@ -201,8 +191,7 @@ Vue 数据双向绑定原理是通过 **数据劫持** + **发布订阅模式** 
 
 ### vue2 和 vue3 的区别
 
-<details><summary>答案</summary>
-
+<details class="details-block"><summary>答案</summary>
 
 **响应性系统**：Vue 3 引入了 `Proxy` 对象作为响应式系统的基础，相较于 Vue 2 中使用的 `Object.defineProperty` 实现，Proxy 具有更好的性能和更丰富的 API。在 Vue 3 中，数据响应式的实现基于 Proxy 对象，可以监听到对象属性的任何变化，包括新增属性和删除属性，相比于 Vue 2 更加灵活。
 
@@ -230,8 +219,6 @@ vue2 基于**字符串的模板编译**方式， Vue 3 基于**函数调用的�
 
 </details>
 
-
-
 ### 02-v-if 和 v-for 哪个优先级更高？
 
 思路
@@ -253,7 +240,7 @@ vue2 基于**字符串的模板编译**方式， Vue 3 基于**函数调用的�
 
 ### 46-History 模式和 Hash 模式有何区别？
 
-<details><summary>答案</summary>
+<details class="details-block"><summary>答案</summary>
 
 hash 路由: https://example.com/#/user/id
 

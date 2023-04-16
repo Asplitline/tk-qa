@@ -120,16 +120,256 @@ JavaScript 采用单线程的事件循环机制，保证了同一时刻只能有
 2. **原型**：每个函数都有一个原型对象，可以通过函数的 `prototype` 属性来访问，原型对象中保存了构造函数的公共属性和方法，也就是所有通过构造函数创建的对象共享的属性和方法。
 3. **对象**：通过构造函数创建出来的实例对象。
 
-### JS 继承
-
-在 JavaScript 中，继承可以通过原型链来实现。每个 JavaScript 对象都有一个原型，可以通过 `Object.getPrototypeOf()` 方法获取该对象的原型。当在一个对象上查找一个属性时，如果对象本身没有该属性，则会沿着原型链向上查找，直到找到该属性或者到达原型链的顶部为止。
+### 继承的几种方式及优缺点
 
 JavaScript 中常用的继承方式有以下几种：
 
-1. **原型链继承**：将父类的实例作为子类的原型，实现子类继承父类的属性和方法。
-2. **构造函数继承**：在子类构造函数中调用父类构造函数，使用 `call` 或 `apply` 方法将父类实例绑定到子类实例上，实现子类继承父类的属性。
-3. **组合继承**：将原型链继承和构造函数继承结合起来，既能够继承父类的属性和方法，又能够在子类实例上独立创建父类属性的副本。
-4. **寄生组合继承**：对组合继承进行优化，避免了在子类实例上创建多余的父类属性副本。
+1. 原型链继承
+2. 构造函数继承
+3. 组合继承
+4. 原型式继承`
+5. 寄生式继承
+6. 寄生组合式继承
+7. ES6 继承
+
+| 继承方式       | 能否向父类构造函数传参 | 能否继承父类实例方法和属性 | 能否继承父类原型方法和属性 | 能否通过 instanceof 判断子类的类型 | 是否存在引用值属性共享问题 | 是否存在重复调用父类构造函数 |
+| -------------- | ---------------------- | -------------------------- | -------------------------- | ---------------------------------- | -------------------------- | ---------------------------- |
+| 原型链继承     | `×`                    | `×`                        | √                          | √                                  | `√`                        | ×                            |
+| 构造函数继承   | √                      | √                          | `×`                        | √                                  | ×                          | `√`                          |
+| 组合继承       | √                      | √                          | √                          | √                                  | ×                          | `√`                          |
+| 原型式继承     | `×`                    | `×`                        | √                          | `×`                                | `√`                        | ×                            |
+| 寄生式继承     | `×`                    | √                          | √                          | `×`                                | `√`                        | ×                            |
+| 寄生组合式继承 | √                      | √                          | √                          | √                                  | ×                          | `√`                          |
+| ES6 继承       | √                      | √                          | √                          | √                                  | `√`                        | ×                            |
+
+**原型链继承**：通过将**父类的实例作为子类的原型**来实现继承。
+
+- [ ] 向父类构造函数传参
+- [ ] 继承父类实例方法和属性
+- [ ] 继承父类原型方法和属性
+- [ ] 能通过 instanceof 判断子类的类型
+- [ ] 没有引用值属性共享问题
+- [ ] 没有重复调用父类构造问题
+
+<details class="details-block">
+    <summary>原型链继承</summary>
+
+```js
+function Parent() {
+  this.name = 'parent';
+}
+
+Parent.prototype.sayHello = function() {
+  console.log('Hello, I am ' + this.name);
+}
+
+function Child() {
+  this.name = 'child';
+}
+
+Child.prototype = new Parent();
+
+const child = new Child();
+child.sayHello(); // 输出：Hello, I am child
+```
+
+</details>
+
+
+
+**构造函数继承**：在子类构造函数中**调用父类构造函数**，使用 `call` 或 `apply` 方法将父类实例绑定到子类实例上，实现子类继承父类的属性。
+
+- [x] 向父类构造函数传参
+- [x] 继承父类实例方法和属性
+- [ ] 继承父类原型方法和属性
+- [x] 能通过 instanceof 判断子类的类型
+- [x] 没有引用值属性共享问题
+- [x] 没有重复调用父类构造问题
+
+缺点：**无法继承**父类**原型上的属性和方法**。
+
+<details class="details-block">
+    <summary>构造函数继承</summary>
+
+```js
+function Parent(name) {
+  this.name = name;
+}
+
+Parent.prototype.sayHello = function() {
+  console.log('Hello, I am ' + this.name);
+}
+
+function Child(name) {
+  Parent.call(this, name); // 在子类构造函数中调用父类构造函数
+}
+
+const child = new Child('child');
+child.sayHello(); // 报错：child.sayHello is not a function
+```
+
+</details>
+
+
+
+**组合继承**：将**原型链继承和构造函数继承结合**起来。
+
+- [x] 向父类构造函数传参
+- [x] 继承父类实例方法和属性
+- [x] 继承父类原型方法和属性
+- [x] 能通过 instanceof 判断子类的类型
+- [x] 没有引用值属性共享问题
+- [ ] 没有重复调用父类构造问题
+
+
+
+优点：继承了**父类原型上的属性和方法**，又能够**向父类构造函数传递参数**，**避免了共享父类**实例上的属性和方法。
+
+缺点：会**调用两次父类构造函数**，一次在子类的构造函数中，另一次在将父类实例作为子类原型时。
+
+> 注意：会丢失子类构造函数
+
+<details class="details-block">
+    <summary>组合继承</summary>
+
+```js
+// 组合继承
+function Parent(name) {
+  this.name = name;
+}
+
+Parent.prototype.sayHello = function() {
+  console.log(`Hello, ${this.name}!`);
+}
+
+function Child(name, age) {
+  Parent.call(this, name);
+  this.age = age;
+}
+
+Child.prototype = new Parent();
+Child.prototype.constructor = Child;
+
+let child = new Child('child', 18);
+console.log(child.name); // "child"
+console.log(child.age); // 18
+child.sayHello(); // "Hello, child!"
+```
+
+</details>
+
+
+
+**原型式继承**：创建**一个新对象**，将**父类的实例作为新对象的原型**，并可以根据需要增强新对象。
+
+优点：使用方便。
+
+缺点：**共享**父类实例上的属性和方法。
+
+<details class="details-block">
+    <summary>原型式继承</summary>
+
+```js
+// 原型式继承
+function createObject(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
+
+let parent = {
+  name: 'parent',
+  sayHello() {
+    console.log(`Hello, ${this.name}!`);
+  }
+}
+
+let child = createObject(parent);
+child.name = 'child';
+console.log(child.name); // "child"
+child.sayHello(); // "Hello, child!"
+```
+
+</details>
+
+
+
+**寄生式继承**：在原型式继承的基础上，增强新对象，返回一个增强后的新对象。
+
+优点：可以用来为对象添加一些方法。
+
+缺点：共享父类实例上的属性和方法。
+
+> 和原型式继承有什么关系？
+
+<details class="details-block">
+    <summary>寄生式继承</summary>
+
+```js
+// 寄生式继承
+function createObject(o) {
+  let obj = Object.create(o);
+  obj.sayHello = function() {
+    console.log(`Hello, ${this.name}!`);
+  };
+  return obj;
+}
+
+let parent = {
+  name: 'parent',
+}
+
+let child = createObject(parent);
+child.name = 'child';
+console.log(child.name); // "child"
+child.sayHello(); // "Hello, child!"
+```
+
+</details>
+
+
+
+**寄生组合继承**：在组合继承的基础上，通过Object.create()方法来减少调用两次父类构造函数的问题。
+
+优点：继承了**父类原型上的属性和方法**，又能够**向父类构造函数传递参数**，且**避免了调用两次**父类构造函数的问题。
+
+缺点：代码较为复杂。
+
+> 共享问题呢？
+
+<details class="details-block">
+    <summary>寄生组合继承</summary>
+
+```js
+// 寄生组合式继承
+function inherit(child, parent) {
+  let prototype = Object.create(parent.prototype);
+  prototype.constructor = child;
+  child.prototype = prototype;
+}
+
+function Parent(name) {
+  this.name = name;
+}
+
+Parent.prototype.sayHello = function() {
+  console.log(`Hello, ${this.name}!`);
+}
+
+function Child(name, age) {
+  Parent.call(this, name);
+  this.age = age;
+}
+
+inherit(Child, Parent);
+
+let child = new Child('child', 18);
+console.log(child.name); // "child"
+console.log(child.age); // 18
+child.sayHello(); // "Hello, child!"
+```
+
+</details>
 
 ### js 垃圾回收机制
 
@@ -279,7 +519,37 @@ XML httpRequest 和 fetch 区别
 
 ## 实战篇
 
-如何切片并传输
+### instanceof的底层实现原理，手动实现一个instanceof
+
+instanceof是JavaScript中的一个运算符，用于判断一个对象是否是一个类或其派生类的实例。其底层实现原理可以简述为：
+
+1. 首先**获取待判断对象的原型链**（即`__proto__`链）。
+2. **在原型链中查找是否存在与待判断类型的原型对象相同的对象**，如果找到则返回true，否则继续查找，直到原型链的末尾。
+3. 如果一直查找到原型链的末尾仍未找到与待判断类型的原型对象相同的对象，则返回false。
+
+<details class="details-block">
+    <summary>手动实现一个instanceof的代码</summary>
+
+  ```js
+  function myInstanceOf(obj, type) {
+    let proto = Object.getPrototypeOf(obj);  // 获取对象的原型链
+    while (proto !== null) {
+      if (proto === type.prototype) {  // 如果找到类型的原型对象，则返回true
+        return true;
+      }
+      proto = Object.getPrototypeOf(proto);  // 继续查找原型链上一层
+    }
+    return false;  // 如果查找到原型链的末尾仍未找到类型的原型对象，则返回false
+  }
+  ```
+
+</details>
+
+
+
+
+
+### 如何切片并传输
 
 ### 断点上传怎么做
 

@@ -1,4 +1,27 @@
 {
+	"/pages/exam": [
+		{
+			"text": "常见笔试题",
+			"collapsible": true,
+			"items": [
+				{
+					"text": "html 笔试题",
+					"link": "/pages/exam/html",
+					"order": 1
+				},
+				{
+					"text": "css 笔试题",
+					"link": "/pages/exam/css",
+					"order": 2
+				},
+				{
+					"text": "js 笔试题",
+					"link": "/pages/exam/js",
+					"order": 3
+				}
+			]
+		}
+	],
 	"/pages/practice": [
 		{
 			"text": "代码实践",

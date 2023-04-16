@@ -12,3 +12,5 @@ order: 1
 手写 深浅拷贝
 
 call，apply，bind
+
+手动实现一个简单的 Symbol

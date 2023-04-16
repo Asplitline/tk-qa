@@ -25,10 +25,17 @@ features:
     link: /pages/qa/
     linkText: 前往
   - icon:
-      src: /icon/test.svg
+      src: /icon/code.svg
       class: feature-icon
     title: QA - 代码实践
     details: 通过代码答疑。
     link: /pages/practice/
+    linkText: 前往
+  - icon:
+      src: /icon/test.svg
+      class: feature-icon
+    title: QA - 常见笔试题
+    details: 涵盖 HTML、CSS、JavaScript。
+    link: /pages/exam/
     linkText: 前往
 ---
