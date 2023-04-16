@@ -1,4 +1,11 @@
 {
+	"/pages/exam": {
+		"text": "常见笔试题",
+		"link": "/pages/exam/index",
+		"sidebar": false,
+		"aside": false,
+		"layout": "page"
+	},
 	"/pages/practice": {
 		"text": "代码实践",
 		"link": "/pages/practice/index",
