@@ -543,3 +543,112 @@ console.log(a)
 JS 中的函数是非惰性求值，将 a=100 完成计算赋值后的结果 100，传入到了 f 函数中，传入的是值而不是逻辑，相当于 f（100），同时变量 a 也处于函数外也即全局环境了，因此 f 函数里面的 x 一开始是传进来的 100，后续被重新赋值为 200.
 
 </details>
+
+
+
+## 17.执行以下程序，下列选项中，说法错误的是（）
+
+```js
+class Phone{
+  constructor(brand){
+    this.brand = brand;
+}
+  call(){} // 1
+}
+function playGame(){console.log("我可以打游戏")};
+function photo(){console.log("我可以拍照")};
+console.log(typeof Phone); // 2
+var p = new Phone('华为');
+console.log(p.brand); // 3
+```
+
+A、1处的call方法是定义在类Phone的prototype对象上
+
+B、2处输出结果为Object
+
+C、3处输出结果为华为
+
+D、若想一次性给类添加playGame和photo两个实例方法，可以使用`Object.assign(Phone.prototype,{playGame,photo})`
+
+<details class="details-block"><summary>答案</summary>    
+答案：B
+
+解析：
+
+A：类的所有实例方法均定义在类的原型对象上；
+
+B：类的本质是函数，实际上，ES6中的类可以视为ES5中构造函数的另一种写法，所以②式的输出结果为function而不是Object；
+
+C：p为类的实例对象，该对象有一个属性brand，属性值为华为
+
+D：`Object.assign(target, source)`可将source源对象所有可枚举的属性（或方法）分配给target对象  
+
+
+
+补充：
+
+`typeof function(){}与class{}`返回的都是`function`
+
+</details>
+
+
+
+## 18.请问以下JS代码输出结果是什么？
+
+```js
+console.log(typeof ''.prototype);
+console.log(typeof ''.__proto__); 
+console.log(typeof ''.__proto__ === typeof ''.prototype); 
+```
+
+<details class="details-block"><summary>答案</summary>
+
+
+答案：undefined、object、false
+
+解析：
+
+  1）**函数（或构造函数）身上才有 prototype** （prototype名字叫原型，原型是一个对象）； 
+
+  2）而其他任何通过构造函数实例化出来的对象(不包括null、undefined）身上都有 `__proto__`（`__proto__`是隐式原型，隐式原型也一个对象）
+
+  3）实例化对象的`__proto__` 就是 构造函数的 prototype  （===关系）
+
+  附：undefind 和 null 既没有prototype也没有 `__proto__` ，因为它俩不是函数，也不是函数实例化出来的对象 
+
+</details>
+
+
+
+## 19.执行以下程序，输出结果为（）
+
+```js
+class Phone{
+  constructor(price){
+    this.price = price;
+  }
+  get price(){
+    return 999;
+  }
+}
+var p = new Phone(888);
+console.log(p.price);
+```
+
+
+
+<details class="details-block"><summary>答案</summary>
+
+
+答案：抛出异常
+
+解析：
+
+当类中一个属性只有get()方法而无set()方法时，该属性是无法进行赋值的，连构造方法中的初始化都不行。
+
+补充：
+
+加上 `set price(v){}`,会输出 999
+
+</details>
+

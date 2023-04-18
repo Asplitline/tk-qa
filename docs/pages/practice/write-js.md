@@ -127,13 +127,16 @@ console.log(powerset(a))
 
 ## 手写深拷贝
 
-深拷贝
+深拷贝注意事项
 
 1. 要考虑到循环引用的情况，避免进入死循环；
 2. 要能够正确地拷贝各种数据类型，如原始类型、数组、对象、日期、正则、Map、Set等；
 3. 对于函数的拷贝，需要根据具体场景进行考虑。一般来说，可以选择不拷贝函数或者使用函数的序列化和反序列化来实现拷贝；
 4. 要保留被拷贝对象的原型链；
 5. 对于对象的属性，要递归拷贝。
+
+<details class="details-block"><summary>答案</summary>
+
 
 ```js
 function deepClone(obj, cache = new WeakMap()) {
@@ -156,37 +159,84 @@ function deepClone(obj, cache = new WeakMap()) {
   const result = Array.isArray(obj) ? [] : {};
   // 缓存引用
   cache.set(obj, result);
-  // 获取对象的所有属性，包括 Symbol 类型
-  const descriptors = Object.getOwnPropertyDescriptors(obj);
+  // 获取对象的所有属性，包括 Symbol 类型和不可枚举属性
+  const keys = Reflect.ownKeys(obj);
   // 处理所有属性
-  for (let key in descriptors) {
-    const descriptor = descriptors[key];
-    // 过滤掉不可枚举的属性
-    if (!descriptor.enumerable) {
-      continue;
-    }
-    // 处理属性值
+  for (let key of keys) {
+	// 处理属性值 - 或 obj[key]
+    const descriptor = Object.getOwnPropertyDescriptor(obj, key);
     const value = descriptor.value;
-    if (typeof value === 'object' && value !== null) {
-      result[key] = deepClone(value, cache);
+     if (typeof value === 'object' && value !== null) {
+      // 处理 Map 和 Set 类型
+      if (value instanceof Map) {
+        const newMap = new Map();
+        cache.set(value, newMap);
+        value.forEach((v, k) => {
+          newMap.set(k, deepClone(v, cache));
+        });
+        result[key] = newMap;
+      } else if (value instanceof Set) {
+        const newSet = new Set();
+        cache.set(value, newSet);
+        value.forEach(v => {
+          newSet.add(deepClone(v, cache));
+        });
+        result[key] = newSet;
+      } else {
+        result[key] = deepClone(value, cache);
+      }
+    } else if (typeof value === 'function') {
+      // 处理函数
+      result[key] = function(...args) {
+        return value.apply(this, args);
+      }
+      Object.setPrototypeOf(result[key], Object.getPrototypeOf(value));
+      cache.set(value, result[key]);
     } else {
       result[key] = value;
     }
   }
-  // 处理 Map 和 Set 类型
-  if (obj instanceof Map) {
-    obj.forEach((value, key) => {
-      result.set(key, deepClone(value, cache));
-    });
-  }
-  if (obj instanceof Set) {
-    obj.forEach(value => {
-      result.add(deepClone(value, cache));
-    });
-  }
   return result;
 }
 ```
+
+```js
+const obj = {
+  str: 'hello world',
+  num: 123,
+  bool: true,
+  nul: null,
+  undef: undefined,
+  date: new Date(),
+  regexp: /hello/,
+  arr: [1, 2, 3],
+  obj: {
+    foo: 'bar',
+    nested: {
+      a: 1,
+      b: 2
+    }
+  },
+  set: new Set([1, 2, 3]),
+  map: new Map([['a', 1], ['b', 2], ['c', 3]]),
+  fn: function(x, y) {
+    return x + y;
+  }
+};
+
+obj.circular = obj; // 循环引用
+
+const clonedObj = deepClone(obj);
+
+console.log('Original object:', obj);
+console.log('Cloned object:', clonedObj);
+
+console.log('Original object and cloned object are equal:', obj === clonedObj);
+console.log('Original object and cloned object have the same structure:', JSON.stringify(obj) === JSON.stringify(clonedObj));
+```
+
+
+</details>
 
 
 
