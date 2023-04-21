@@ -60,6 +60,7 @@ D. 4 式输出结果为 1
 <details class="details-block">
     <summary>答案</summary>
 答案：A
+
 解析：
 
 B 选项，数组的长度仍为 3，这是因为 arr.b = 0;实际上是为变量 arr 赋予属性 b，该属性不是数组元素，所以 arr.length 值不变，仍为 3；`[1, empty × 2, b: 0]`
