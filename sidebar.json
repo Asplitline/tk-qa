@@ -1,4 +1,5 @@
 {
+	"/pages/a": [],
 	"/pages/exam": [
 		{
 			"text": "常见笔试题",
@@ -96,6 +97,20 @@
 				}
 			],
 			"order": 3
+		}
+	],
+	"/pages/reproduce": [
+		{
+			"text": "待归档",
+			"collapsible": true,
+			"items": [
+				{
+					"text": "WebSocket ｜概念、原理、用法及实践",
+					"link": "/pages/reproduce/draft/websocket",
+					"order": 1
+				}
+			],
+			"order": 1
 		}
 	]
 }
