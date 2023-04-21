@@ -21,5 +21,12 @@
 		"aside": false,
 		"layout": "page",
 		"order": 1
+	},
+	"/pages/reproduce": {
+		"text": "转载",
+		"link": "/pages/reproduce/index",
+		"sidebar": false,
+		"aside": false,
+		"layout": "page"
 	}
 }

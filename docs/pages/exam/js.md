@@ -652,3 +652,32 @@ console.log(p.price);
 
 </details>
 
+
+
+## 20.请问以下JS代码的输出顺序是？
+
+```js
+let date = new Date()
+setTimeout(() => {
+    console.log('1')
+}, 2000)
+setTimeout('console.log(2)',1000);
+setTimeout(function() {
+  console.log('3')
+}, 1500);
+while((new Date() - date) < 3000) {}
+```
+
+
+
+<details class="details-block"><summary>答案</summary>
+答案：3秒以后同时输出2 3 1
+    
+解析：
+
+setTimeout可以将字符串当成代码执行，类比eval函数。
+
+While所在是微任务，所以前3秒后在执行while函数，setTimeout函数虽然在各自对应时间后插入了队列，但是由于属于宏任务所以暂时还没有执行，直到while微任务完成，才按顺序输出。
+
+</details>
+
