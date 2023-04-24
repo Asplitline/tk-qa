@@ -415,9 +415,17 @@ Promise 对象具有链式调用的特点，即可以在一个 then 方法中返
 17. 字符串和数值扩展
 18. 生成器和异步函数
 
-xhr 请求取消
-
 ## 对比篇
+
+### `__proto__`和`prototype`
+
+`__proto__` 是每个对象都有的一个属性，指向它的原型对象（隐式原型）。
+
+prototype 是函数才有的一个属性，指向它的构造函数的原型对象（显式原型）。
+
+当你创建一个对象时，它的 `__proto__` 属性会自动设置为它的构造函数的 prototype 属性。
+
+当你访问一个对象的属性或方法时，它会先在自身查找，如果没有找到，就会沿着 `__proto__` 链向上查找，直到找到或者到达 `Object.prototype.__proto__`（null）为止
 
 ### let、const、var 的区别
 
@@ -515,7 +523,9 @@ xhr 请求取消
 3. 遍历方式：`Map`和`Set`都可以使用`for-of`循环进行遍历，但是遍历顺序不同。在`Map`中，遍历顺序是插入顺序；而在`Set`中，遍历顺序就是插入顺序。
 4. 方法：`Map`提供了一系列操作方法，如`set`、`get`、`has`、`delete`等；而`Set`也提供了类似的方法，如`add`、`has`、`delete`等。
 
-XML httpRequest 和 fetch 区别
+
+
+
 
 ## 实战篇
 
@@ -592,3 +602,5 @@ setInterval 底层原理，有什么问题
 promise 内部运行逻辑
 
 promise then 方法的回调函数里，在 promise 最外层加个 try catch，能捕获到这个异常吗
+
+xhr 请求取消

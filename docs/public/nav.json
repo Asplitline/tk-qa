@@ -11,6 +11,11 @@
 				"text": "代码实践",
 				"link": "/pages/practice/index",
 				"activeMath": "/practice/"
+			},
+			{
+				"text": "笔试题",
+				"link": "/pages/exam/index",
+				"activeMath": "/exam/"
 			}
 		]
 	}

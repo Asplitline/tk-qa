@@ -4,7 +4,8 @@ const nav = [
     text: 'QA',
     items: [
       { text: '知识点', link: '/qa/index', activeMath: '/qa/' },
-      { text: '代码实践', link: '/practice/index', activeMath: '/practice/' }
+      { text: '代码实践', link: '/practice/index', activeMath: '/practice/' },
+      { text: '笔试题', link: '/exam/index', activeMath: '/exam/' }
     ]
   }
 ]

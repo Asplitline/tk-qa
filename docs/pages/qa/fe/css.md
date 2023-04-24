@@ -136,7 +136,21 @@ order: 3
 
 `flex` 是 `Flexible Box` 的缩写，意为"弹性布局"。
 
-有以下属性：flex-direction，flex-wrap，flex-flow，justify-content，align-items，align-content。
+关键概念：两根轴线、起始和终止描述方向、容器和元素
+
+`flex-direction`： 排列方向（主轴的方向）；
+
+`flex-wrap`：多行 Flex 容器如何换行；
+
+`justify-content`：在主轴上的对齐方式；
+
+`align-items`：在交叉轴上如何对齐；
+
+`align-content`：多根轴线的对齐方式。
+
+### grid 布局
+
+### grid 布局
 
 ### flex：1 代表什么？
 
@@ -146,7 +160,33 @@ flex: 1 1 auto
 
 ## 对比类
 
-块级元素和行内元素的区别
+### 块级元素和行内元素的区别
+
+元素分为块级元素和行内元素，主要区别在于**默认显示方式和盒模型属性**。
+
+块级元素（`block-level element`）：**以新行**开始，宽度默认为100%（父元素宽度），高度由内容和padding、border、margin决定，可以通过CSS的width和height属性来修改它们的宽高。
+
+常见的块级元素有div、p、h1~h6、ul、ol、li、table等。块级元素可以包含行内元素和其他块级元素。
+
+行内元素（`inline element`）：**不以新行**开始，宽度默认为内容的宽度，高度由内容决定，不可以通过CSS的width和height属性来修改它们的宽高。
+
+常见的行内元素有a、span、strong、em、img、input等。行内元素不能包含块级元素和其他行内元素。
+
+> 行内元素对外边距（margin）和内边距（padding）仅设置左右方向有效 上下无效
+
+块级元素的盒模型由content、padding、border、margin组成，而行内元素的盒模型只包含content、padding和border。
+
+### flex 布局和grid 布局区别
+
+Flex布局适合于一维布局（即沿一个轴线布局），可以方便地实现水平或垂直居中。
+
+Flex布局采用的是弹性盒子模型，主要通过定义容器（父元素）和其子元素的属性来实现布局。
+
+Flex布局中，主要的CSS属性有：`display、flex-direction、justify-content、align-items、flex`等。
+
+Grid布局适合于二维布局，可以方便地实现网格状布局，可以将页面划分为多个行和列，然后通过网格线的定义来决定每个单元格的大小和位置。
+
+Grid布局采用的是网格模型，主要通过定义容器（父元素）和其子元素的属性来实现布局。在Grid布局中，主要的CSS属性有：`display、grid-template-rows、grid-template-columns、grid-row和grid-column`等。
 
 ## 实战类
 
